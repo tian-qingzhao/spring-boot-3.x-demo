@@ -3,7 +3,7 @@
 SpringBoot2.7引入了新的自动装配方式 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` ， 原来的写法
 spring.factories 在 3.0 版本以下还能兼容，3.0 新版本之后，老的写法 spring.factories 不能使用了。详见：{@link ImportCandidates}
 
-### Spring Framework 6 两个重要特性：
+### Spring Framework 6 三个重要特性：
 
 #### 1.Http Interface
 
