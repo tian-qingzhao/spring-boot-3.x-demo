@@ -11,7 +11,7 @@
     </parent>
     
     <groupId>com.tqz.spring.boot17.demo</groupId>
-    <artifactId>spring-boot3.x-demo</artifactId>
+    <artifactId>spring-boot-3.x-demo</artifactId>
     <version>1.0.0</version>
     
     <properties>

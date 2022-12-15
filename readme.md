@@ -1,9 +1,13 @@
+### Spring Boot 3.x Demo
+
+Spring Boot 3.x 版本的demo。使用Http Interface进行远程调用，使用GraalVM构建本地镜像，把springboot应用编译为可执行的二进制文件。
+
 ### Spring Boot 2.7 新自动装配
 
 SpringBoot2.7引入了新的自动装配方式 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` ， 原来的写法
 spring.factories 在 3.0 版本以下还能兼容，3.0 新版本之后，老的写法 spring.factories 不能使用了。详见：{@link ImportCandidates}
 
-### Spring Framework 6 三个重要特性：
+### Spring Framework 6 三个重要特性
 
 #### 1.Http Interface
 
@@ -45,6 +49,6 @@ docker环境使用 `mvn -Pnative spring-boot:build-image` 命令构建镜像。�
 ```
 
 (4) 解决native-image反射、代理、类序列化等问题。
-`java -agentlib:native-image-agent=config-output-dir=d:/idea_workspace/spring-boot3.x-demo/src/main/resources/META-INF/native-image -jar d:/idea_workspace/spring-boot3.x-demo/target/spring-boot3.x-demo-1.0.0.jar`
+`java -agentlib:native-image-agent=config-output-dir=d:/idea_workspace/spring-boot-3.x-demo/src/main/resources/META-INF/native-image -jar d:/idea_workspace/spring-boot-3.x-demo/target/spring-boot-3.x-demo-1.0.0.jar`
 ，执行完该命令会在 `resources/META-INF/native-image` 文件夹下面生成 `reflect-config.json` 、 `proxy-config.json`
 、 `serialization-config.json` 等文件。
