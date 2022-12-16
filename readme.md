@@ -1,13 +1,13 @@
-### Spring Boot 3.x Demo
+### 一、Spring Boot 3.x Demo
 
 Spring Boot 3.x 版本的demo。使用Http Interface进行远程调用，使用GraalVM构建本地镜像，把springboot应用编译为可执行的二进制文件。
 
-### Spring Boot 2.7 新自动装配
+### 二、Spring Boot 2.7 新自动装配
 
 SpringBoot2.7引入了新的自动装配方式 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` ， 原来的写法
 spring.factories 在 3.0 版本以下还能兼容，3.0 新版本之后，老的写法 spring.factories 不能使用了。详见：{@link ImportCandidates}
 
-### Spring Framework 6 三个重要特性
+### 三、Spring Framework 6 三个重要特性
 
 #### 1.Http Interface
 
@@ -48,7 +48,50 @@ docker环境使用 `mvn -Pnative spring-boot:build-image` 命令构建镜像。�
 </properties>
 ```
 
-(4) 解决native-image反射、代理、类序列化等问题。
+### 四、Spring Boot 3.x 在使用的过程中遇到的问题
+
+#### 1.解决native-image反射、代理、类序列化等问题。
+
 `java -agentlib:native-image-agent=config-output-dir=d:/idea_workspace/spring-boot-3.x-demo/src/main/resources/META-INF/native-image -jar d:/idea_workspace/spring-boot-3.x-demo/target/spring-boot-3.x-demo-1.0.0.jar`
 ，执行完该命令会在 `resources/META-INF/native-image` 文件夹下面生成 `reflect-config.json` 、 `proxy-config.json`
 、 `serialization-config.json` 等文件。
+
+#### 2.解决DNS问题
+
+使用 http interface 会出现如下错误:
+java.lang.ExceptionInInitializerError: null at
+io.netty.resolver.dns.DnsServerAddressStreamProviders$DefaultProviderHolder$1.provider(
+DnsServerAddressStreamProviders.java:150) ~[na:na]
+
+解决办法：共下面两个步骤。
+
+(1).在resources/META-INF.native-image/jni-config.json 文件添加如下配置
+
+```json
+{
+  "name": "sun.net.dns.ResolverConfigurationImpl",
+  "fields": [
+    {
+      "name": "os_searchlist"
+    },
+    {
+      "name": "os_nameservers"
+    }
+  ]
+}
+```
+
+(2).在 pom.xml 文件里面加入plugins标签里面添加 `--initialize-at-run-time=sun.net.dns.ResolverConfigurationImpl` 参数，完整plugin标签配置如下：
+
+```xml
+
+<plugin>
+    <groupId>org.graalvm.buildtools</groupId>
+    <artifactId>native-maven-plugin</artifactId>
+    <configuration>
+        <buildArgs>
+            --initialize-at-run-time=sun.net.dns.ResolverConfigurationImpl
+        </buildArgs>
+    </configuration>
+</plugin>
+```
