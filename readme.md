@@ -38,15 +38,12 @@ graalvm 和 native-image 即可。
 VS Code 地址 <a href="https://visualstudio.microsoft.com/zh-hans/downloads/">
 https://visualstudio.microsoft.com/zh-hans/downloads.
 
-(3) window系统在x64窗口(非cmd打开的窗口)里面使用 `mvn -Pnative clean native:compile` 命令编译，编译完之后直接执行项目的target目录下的.exe文件。
-docker环境使用 `mvn -Pnative spring-boot:build-image` 命令构建镜像。同时在 pom.xml 的properties标签里面添加
+(3) 编译二级制可执行文件
 
-```xml
-
-<properties>
-    <spring-boot.build-image.imageName>springboot3demo</spring-boot.build-image.imageName>
-</properties>
-```
+* window系统在x64窗口(非cmd打开的窗口)里面使用 `mvn -Pnative clean native:compile` 命令编译，编译完之后直接执行项目的target目录下的.exe文件。
+* docker环境首先在 pom.xml
+  的properties标签里面添加 `<spring-boot.build-image.imageName>springboot3demo</spring-boot.build-image.imageName>`
+  ，添加完使用 `mvn -Pnative spring-boot:build-image` 命令构建镜像。
 
 ### 四、Spring Boot 3.x 在使用的过程中遇到的问题
 
